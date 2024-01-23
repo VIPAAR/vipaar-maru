@@ -21,9 +21,6 @@ matrix:
       elixir: 1.7.4
 
 sudo: false
-notifications:
-  recipients:
-    - self@falood.me
 before_script:
   - mix deps.get --only test
 after_script:
