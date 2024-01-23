@@ -23,7 +23,7 @@ defmodule Maru.Server do
 
   defmacro __using__(opts) do
     quote bind_quoted: [opts: opts, module: __MODULE__] do
-      @otp_options opts |> Keyword.get(:otp_app) |> Application.get_env(__MODULE__, [])
+      @otp_options opts |> Keyword.get(:otp_app) |> Application.compile_env(__MODULE__, [])
       @opts opts |> Keyword.delete(:otp_app) |> Keyword.merge(@otp_options)
       @module module
 
