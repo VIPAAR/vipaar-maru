@@ -23,8 +23,8 @@ defmodule Maru.Server do
 
   defmacro __using__(opts) do
     quote bind_quoted: [opts: opts, module: __MODULE__] do
-      def otp_options(), do: opts |> Keyword.get(:otp_app) |> Application.get_env(__MODULE__, [])
-      def opts(), do: opts |> Keyword.delete(:otp_app) |> Keyword.merge(otp_options())
+      def otp_options(), do: unquote(opts) |> Keyword.get(:otp_app) |> Application.get_env(__MODULE__, [])
+      def opts(), do: unquote(opts) |> Keyword.delete(:otp_app) |> Keyword.merge(otp_options())
       @module module
 
       def init(_, opts) do
