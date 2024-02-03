@@ -23,8 +23,8 @@ defmodule Maru.Server do
 
   defmacro __using__(opts) do
     quote bind_quoted: [opts: opts, module: __MODULE__] do
-      @otp_options opts |> Keyword.get(:otp_app) |> Application.compile_env(__MODULE__, [])
-      @opts opts |> Keyword.delete(:otp_app) |> Keyword.merge(@otp_options)
+      def otp_options(), do: opts |> Keyword.get(:otp_app) |> Application.get_env(__MODULE__, [])
+      def opts(), do: opts |> Keyword.delete(:otp_app) |> Keyword.merge(otp_options())
       @module module
 
       def init(_, opts) do
@@ -32,13 +32,13 @@ defmodule Maru.Server do
       end
 
       def start_link(opts \\ []) do
-        opts = Keyword.merge(@opts, opts)
+        opts = Keyword.merge(opts(), opts)
         {:ok, opts} = init(:runtime, opts)
         @module.start_link(opts)
       end
 
       def child_spec(opts \\ []) do
-        opts = Keyword.merge(@opts, opts)
+        opts = Keyword.merge(opts(), opts)
         {:ok, opts} = init(:supervisor, opts)
         @module.child_spec(opts)
       end
@@ -46,7 +46,7 @@ defmodule Maru.Server do
       defoverridable init: 2
 
       def __plug__ do
-        @opts[:plug]
+        opts()[:plug]
       end
 
       defmacro __using__(options) do
