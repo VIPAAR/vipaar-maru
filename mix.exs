@@ -22,7 +22,7 @@ defmodule Maru.Mixfile do
   end
 
   def application do
-    [applications: [:ranch, :cowboy, :plug]]
+    [applications: [:ranch, :cowboy, :plug, :jason, :plug_cowboy, :inets]]
   end
 
   defp deps do
