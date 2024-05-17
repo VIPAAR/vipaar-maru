@@ -68,7 +68,7 @@ defmodule Maru.Server do
   end
 
   @spec start_link(Keyword.t()) :: {:ok, pid} | {:error, term}
-  @since "0.13.2"
+  @doc since: "0.13.2"
   def start_link(opts) do
     {adapter, scheme, plug, options} = config(opts)
 
@@ -81,7 +81,7 @@ defmodule Maru.Server do
   end
 
   @spec start_link(Keyword.t()) :: map()
-  @since "0.13.2"
+  @doc since: "0.13.2"
   def child_spec(opts) do
     {adapter, scheme, plug, options} = config(opts)
 
@@ -112,13 +112,13 @@ defmodule Maru.Server do
     {adapter, scheme, plug, options}
   end
 
-  @since "0.13.2"
+  @doc since: "0.13.2"
   @spec to_port(String.t() | integer()) :: integer()
   defp to_port(nil), do: nil
   defp to_port(port) when is_integer(port), do: port
   defp to_port(port) when is_binary(port), do: port |> String.to_integer()
 
-  @since "0.13.2"
+  @doc since: "0.13.2"
   @spec to_ip(String.t()) :: :inet.ip_address()
   defp to_ip(nil), do: nil
 
