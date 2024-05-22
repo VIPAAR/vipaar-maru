@@ -25,10 +25,10 @@ defmodule Maru do
     end
   end
 
-  json_library = Application.get_env(:maru, :json_library, Jason)
+  json_library = Application.compile_env(:maru, :json_library, Jason)
 
   unless Code.ensure_loaded?(json_library) do
-    Logger.warn(
+    Logger.warning(
       "Json library #{json_library} is not loaded, add your json library to deps and config with `config :maru, :json_library, #{
         json_library
       }`"
