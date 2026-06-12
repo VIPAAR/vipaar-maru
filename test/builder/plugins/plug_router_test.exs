@@ -37,15 +37,20 @@ defmodule Maru.Builder.PlugRouterTest do
   end
 
   test "normal router with before" do
-    assert_raise CompileError, ~r/undefined function before/, fn ->
-      defmodule NormalRouterWithBeforeTest do
-        use Maru.Router
+    output =
+      ExUnit.CaptureIO.capture_io(:stderr, fn ->
+        assert_raise CompileError, fn ->
+          defmodule NormalRouterWithBeforeTest do
+            use Maru.Router
 
-        before do
-          plug Plug.Logger
+            before do
+              plug Plug.Logger
+            end
+          end
         end
-      end
-    end
+      end)
+
+    assert output =~ "undefined function before"
   end
 
   test "path_params" do

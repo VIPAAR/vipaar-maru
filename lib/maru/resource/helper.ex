@@ -35,6 +35,18 @@ defmodule Resource.Helper do
   def mount(mounted_module, %Macro.Env{module: module} = env) do
     resource = Module.get_attribute(module, :resource)
 
+    mount_meta = %{
+      module: mounted_module,
+      version: resource.version,
+      path_prefix: resource.path,
+      parameters: resource.parameters,
+      resource_plugs: resource.plugs,
+      scope_plugs: Module.get_attribute(module, :plugs),
+      mount_link: [mounted_module]
+    }
+
+    Module.put_attribute(module, :mounts, mount_meta)
+
     Enum.each(mounted_module.__routes__(), fn mounted_route ->
       if not is_nil(resource.version) and not is_nil(mounted_route.version) do
         raise "can't mount a versional router to another versional router"

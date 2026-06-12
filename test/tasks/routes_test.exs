@@ -39,7 +39,7 @@ defmodule Maru.Tasks.RoutesTest do
 
     route = API2.__routes__() |> List.first()
 
-    assert_raise ArgumentError, "argument error", fn ->
+    assert_raise ArgumentError, ~r/(argument error|construction of binary failed)/, fn ->
       "test: " <> (route.desc || "")
     end
 
